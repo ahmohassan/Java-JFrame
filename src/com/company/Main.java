@@ -1,67 +1,88 @@
 package com.company;
 
-import javax.swing.*;
-import java.awt.*;
 
-public class Main extends Canvas  {
-//    Main(){
-//        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        this.setSize(600,600);
-//        this.setLocationRelativeTo(null);
-//        this.setVisible(true);
-//    }
-
-    public void paint(Graphics g) {
-        g.setColor(Color.green);
-        g.fillRect(10, 600,740, 80);
-        g.setColor(Color.LIGHT_GRAY);
-        g.fillRect(120, 200,600, 440);
-
-        g.setColor(Color.red); // roof color
-        g.fillRect(100, 200,639, 70);
+import java.util.Scanner;
 
 
-        g.setColor(Color.red); //Door color
-        g.fillRect(350, 480,120, 190);
+class Main {
 
-        g.setColor(Color.gray); //shsous color
-        g.fillRect(350, 630,120, 50);
+    // driver program
+    public static void main(String[] args)
+    {
+        Scanner keyboard = new Scanner(System.in);
+        System.out.print("1. Odd magic square  \nSelect: ");
+        int SelectMagic = keyboard.nextInt();
 
-        g.setColor(Color.black); //steps color
-        g.fillRect(350, 670,120, 10);
-        g.fillRect(350, 650,120, 10);
-        g.fillRect(350, 630,120, 10);
-
-
-        g.setColor(Color.darkGray); //window border color 1
-        g.fillRect(150, 350,130, 110);
-
-        g.setColor(Color.red); //window color 1
-        g.fillRect(155, 355,120, 100);
-
-
-        g.setColor(Color.darkGray); //window border color 2
-        g.fillRect(530, 350,130, 110);
-
-        g.setColor(Color.red); //window  color 2
-        g.fillRect(535, 355,120, 100);
-
-        g.setColor(Color.black);
-        g.fillRect(120, 160,50, 60);
+        switch (SelectMagic){
+            case 1:
+                System.out.print("enter number of odd of n:") ;
+                int n =keyboard.nextInt();
+                if(n>0 && n%2 != 0  ){
+                    OddOrder.MagicSquareOdd(n);
+                }else {
+                    System.out.println("please enter positive number of odd of n:");
+                }
+                break;
+            default:
+                System.out.println("Please check number options you have");
+        }
 
 
-
-//        setForeground(Color.black);
     }
-    public static void main(String[] args) {
-        Main m=new Main();
-        JFrame f=new JFrame();
-        f.add(m);
-        f.setSize(1020,800);
-        f.setVisible(true);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setLocationRelativeTo(null);
-    }
-
 }
+//Odd magic square
+class OddOrder{
+    static void MagicSquareOdd(int n)
+    {
+        int[][] MagicOddNumbes = new int[n][n];
+
+        // Initialize position for 1
+        int i = n / 2;
+        int j = n - 1;
+
+        // One by one put all values in magic square
+        for (int num = 1; num <= n * n;) {
+            if (i == -1 && j == n) // 3rd condition
+            {
+                j = n - 2;
+                i = 0;
+            }
+            else {
+
+                if (j == n)
+                    j = 0;
+
+
+                if (i < 0)
+                    i = n - 1;
+            }
+
+            // 2nd condition
+            if (MagicOddNumbes[i][j] != 0) {
+                j -= 2;
+                i++;
+                continue;
+            }
+            else
+                // set number
+                MagicOddNumbes[i][j] = num++;
+
+            // 1st condition
+            j++;
+            i--;
+        }
+
+        // print magic square
+        System.out.println("The Magic Square for " + n
+                + ":");
+        System.out.println("Sum of each row or column "
+                + n * (n * n + 1) / 2 + ":");
+        for (i = 0; i < n; i++) {
+            for (j = 0; j < n; j++)
+                System.out.print(MagicOddNumbes[i][j] + " ");
+            System.out.println();
+        }
+    }
+}
+
 
